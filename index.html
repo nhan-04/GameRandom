@@ -473,7 +473,7 @@
 <body>
   <audio id="bgMusic" src="nhacxoso.mp3" preload="auto" autoplay loop></audio>
   <audio id="surpriseSound" src="batngo.mp3" preload="auto"></audio>
-  <audio id="clockSound" src="dongho.mp3" preload="auto" loop></audio>
+  <audio id="clockSound" src="dongho.mp3" preload="auto"></audio>
 
   <main class="stage">
     <section class="brand">
@@ -547,7 +547,7 @@
     bgMusic.loop = true;
     surpriseSound.volume = 0.95;
     clockSound.volume = 0.9;
-    clockSound.loop = true;
+    clockSound.loop = false;
 
     function toInteger(value) {
       return Number.parseInt(value, 10);
@@ -581,6 +581,7 @@
 
     async function startClockSound() {
       try {
+        clockSound.pause();
         clockSound.currentTime = 0;
         clockSound.loop = true;
         await clockSound.play();
@@ -591,8 +592,11 @@
 
     function stopClockSound() {
       try {
+        clockSound.loop = false;
         clockSound.pause();
         clockSound.currentTime = 0;
+        clockSound.src = clockSound.getAttribute('src');
+        clockSound.load();
       } catch (error) {
         // Bỏ qua nếu trình duyệt không cho điều khiển audio.
       }
@@ -827,51 +831,57 @@
 
       const { min, max, count } = settings;
 
-      initBoxes(count);
-      setControlsDisabled(true);
-      startBtn.textContent = 'ĐANG QUAY...';
+      try {
+        initBoxes(count);
+        setControlsDisabled(true);
+        startBtn.textContent = 'ĐANG QUAY...';
 
-      const boxes = [...document.querySelectorAll('.ball')];
-      const finalNumbers = uniqueRandomNumbers(count, min, max);
-      const totalBatches = Math.ceil(count / BATCH_SIZE);
+        const boxes = [...document.querySelectorAll('.ball')];
+        const finalNumbers = uniqueRandomNumbers(count, min, max);
+        const totalBatches = Math.ceil(count / BATCH_SIZE);
 
-      for (let start = 0; start < count; start += BATCH_SIZE) {
-        const batchIndex = Math.floor(start / BATCH_SIZE) + 1;
-        const end = Math.min(start + BATCH_SIZE, count);
-        const batchNumbers = finalNumbers.slice(start, end);
-        const batchBoxes = boxes.slice(start, end);
+        for (let start = 0; start < count; start += BATCH_SIZE) {
+          const batchIndex = Math.floor(start / BATCH_SIZE) + 1;
+          const end = Math.min(start + BATCH_SIZE, count);
+          const batchNumbers = finalNumbers.slice(start, end);
+          const batchBoxes = boxes.slice(start, end);
 
-        subtitleEl.textContent = `🎡 Đang quay đợt ${batchIndex}/${totalBatches}`;
+          subtitleEl.textContent = `🎡 Đang quay đợt ${batchIndex}/${totalBatches}`;
+          statusPill.style.display = 'inline-flex';
+          statusPill.textContent = `Chuẩn bị mở ${batchNumbers.length} số sau ${SPIN_DURATION / 1000} giây...`;
+          noteEl.textContent = `Hồi hộp nào! Đợt này sẽ hiện ${batchNumbers.length} số.`;
+
+          batchBoxes.forEach((box, index) => {
+            startHorizontalReel(box, batchNumbers[index], min, max, SPIN_DURATION, index);
+          });
+
+          await wait(SPIN_DURATION);
+
+          batchBoxes.forEach((box, index) => {
+            finalizeBox(box, batchNumbers[index]);
+          });
+
+          progressBar.style.width = `${Math.round((end / count) * 100)}%`;
+          noteEl.textContent = `Đã mở ${end}/${count} số.`;
+          playSurpriseSound();
+          groupRevealSound();
+          fireConfetti(26);
+        }
+
+        subtitleEl.textContent = '🎉 Hoàn thành!';
         statusPill.style.display = 'inline-flex';
-        statusPill.textContent = `Chuẩn bị mở ${batchNumbers.length} số sau ${SPIN_DURATION / 1000} giây...`;
-        noteEl.textContent = `Hồi hộp nào! Đợt này sẽ hiện ${batchNumbers.length} số.`;
+        statusPill.textContent = 'Đã quay xong';
+        noteEl.textContent = 'Chúc mừng các số may mắn!';
+        victorySound();
+        fireConfetti(90);
 
-        batchBoxes.forEach((box, index) => {
-          startHorizontalReel(box, batchNumbers[index], min, max, SPIN_DURATION, index);
-        });
-
-        await wait(SPIN_DURATION);
-
-        batchBoxes.forEach((box, index) => {
-          finalizeBox(box, batchNumbers[index]);
-        });
-
-        progressBar.style.width = `${Math.round((end / count) * 100)}%`;
-        noteEl.textContent = `Đã mở ${end}/${count} số.`;
-        playSurpriseSound();
-        groupRevealSound();
-        fireConfetti(26);
+        startBtn.textContent = '🎡 QUAY LẠI';
+      } finally {
+        stopClockSound();
+        restoreBackgroundMusic();
+        setControlsDisabled(false);
+        isRunning = false;
       }
-
-      subtitleEl.textContent = '🎉 Hoàn thành!';
-      statusPill.textContent = 'Đã quay xong';
-      noteEl.textContent = 'Chúc mừng các số may mắn!';
-      victorySound();
-      fireConfetti(90);
-
-      setControlsDisabled(false);
-      startBtn.textContent = '🎡 QUAY LẠI';
-      isRunning = false;
     }
 
     function resetNumbers() {
