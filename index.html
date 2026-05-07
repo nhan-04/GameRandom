@@ -472,6 +472,8 @@
 
 <body>
   <audio id="bgMusic" src="nhacxoso.mp3" preload="auto" autoplay loop></audio>
+  <audio id="surpriseSound" src="batngo.mp3" preload="auto"></audio>
+  <audio id="clockSound" src="dongho.mp3" preload="auto" loop></audio>
 
   <main class="stage">
     <section class="brand">
@@ -534,6 +536,8 @@
     const maxInput = document.getElementById('maxNum');
     const countInput = document.getElementById('drawCount');
     const bgMusic = document.getElementById('bgMusic');
+    const surpriseSound = document.getElementById('surpriseSound');
+    const clockSound = document.getElementById('clockSound');
     const allInputs = [minInput, maxInput, countInput];
 
     let audioCtx;
@@ -541,6 +545,9 @@
 
     bgMusic.volume = 0.62;
     bgMusic.loop = true;
+    surpriseSound.volume = 0.95;
+    clockSound.volume = 0.9;
+    clockSound.loop = true;
 
     function toInteger(value) {
       return Number.parseInt(value, 10);
@@ -561,6 +568,43 @@
         musicBtn.style.display = 'none';
       } catch (error) {
         musicBtn.style.display = 'inline-block';
+      }
+    }
+
+    function lowerBackgroundMusic() {
+      bgMusic.volume = 0.28;
+    }
+
+    function restoreBackgroundMusic() {
+      bgMusic.volume = 0.62;
+    }
+
+    async function startClockSound() {
+      try {
+        clockSound.currentTime = 0;
+        clockSound.loop = true;
+        await clockSound.play();
+      } catch (error) {
+        // Nếu trình duyệt chặn âm thanh, âm thanh đồng hồ sẽ được bỏ qua.
+      }
+    }
+
+    function stopClockSound() {
+      try {
+        clockSound.pause();
+        clockSound.currentTime = 0;
+      } catch (error) {
+        // Bỏ qua nếu trình duyệt không cho điều khiển audio.
+      }
+    }
+
+    function playSurpriseSound() {
+      try {
+        surpriseSound.pause();
+        surpriseSound.currentTime = 0;
+        surpriseSound.play();
+      } catch (error) {
+        // Bỏ qua nếu trình duyệt chặn âm thanh bất ngờ.
       }
     }
 
@@ -778,6 +822,8 @@
 
       isRunning = true;
       await startBackgroundMusic();
+      lowerBackgroundMusic();
+      await startClockSound();
 
       const { min, max, count } = settings;
 
@@ -812,6 +858,7 @@
 
         progressBar.style.width = `${Math.round((end / count) * 100)}%`;
         noteEl.textContent = `Đã mở ${end}/${count} số.`;
+        playSurpriseSound();
         groupRevealSound();
         fireConfetti(26);
       }
@@ -829,6 +876,9 @@
 
     function resetNumbers() {
       if (isRunning) return;
+
+      stopClockSound();
+      restoreBackgroundMusic();
 
       const settings = getSettings(true);
       if (!settings) return;
