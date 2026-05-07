@@ -25,8 +25,9 @@
       min-height: 100vh;
       font-family: 'Montserrat', Arial, sans-serif;
       color: var(--white);
-      background: #0E4BA9;
+      background: #0E4BA9 url('https://i.ibb.co/9H3v5CFf/anhnen.png') center center / cover no-repeat fixed;
       overflow: hidden;
+      opacity: .95;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -40,15 +41,11 @@
       inset: 0;
       pointer-events: none;
       z-index: 0;
+      display: none;
     }
 
     body::before {
-      background-image:
-        radial-gradient(circle, rgba(255,255,255,.65) 0 3px, transparent 4px),
-        radial-gradient(circle, rgba(255,255,255,.35) 0 6px, transparent 7px);
-      background-size: 72px 72px, 128px 128px;
-      animation: floatDots 16s linear infinite;
-      opacity: .55;
+      display: none;
     }
 
     body::after {
@@ -57,11 +54,9 @@
         radial-gradient(circle at 50% 2%, rgba(255,255,255,.35), transparent 28%);
       mix-blend-mode: soft-light;
     }
-
-    @keyframes floatDots {
-      from { background-position: 0 0, 0 0; }
-      to { background-position: 72px 72px, -128px 128px; }
+50% { transform: translate3d(0,-10px,0) scale(1.15) rotate(18deg); opacity: 1; }
     }
+
 
     .stage {
       width: min(1260px, 96vw);
