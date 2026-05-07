@@ -262,14 +262,21 @@
     }
 
     .numbers {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(110px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
       gap: 16px;
       position: relative;
       z-index: 1;
+      width: 100%;
+      margin-inline: auto;
     }
 
     .ball {
+      flex: 0 1 calc((100% - 64px) / 5);
+      min-width: 150px;
+      max-width: 210px;
       min-height: 104px;
       border-radius: 30px;
       display: grid;
@@ -459,13 +466,21 @@
       .brand { flex-direction: column; text-align: center; }
       .mascot { width: 170px; }
       .settings { grid-template-columns: 1fr; }
-      .numbers { grid-template-columns: repeat(2, minmax(110px, 1fr)); gap: 12px; }
+      .numbers { gap: 12px; }
+      .ball {
+        flex: 0 1 calc((100% - 12px) / 2);
+        min-width: 130px;
+        max-width: 220px;
+      }
       .ball, .reelViewport, .reelTrack { min-height: 86px; }
       button { font-size: 18px; padding: 14px 22px; }
     }
 
     @media (min-width: 881px) and (max-width: 1080px) {
-      .numbers { grid-template-columns: repeat(4, minmax(110px, 1fr)); }
+      .ball {
+        flex: 0 1 calc((100% - 48px) / 4);
+        min-width: 140px;
+      }
     }
   </style>
 </head>
