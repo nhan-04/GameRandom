@@ -477,7 +477,7 @@
     <section class="brand">
       <div>
         <div class="sub" id="subtitle">🎲 Xổ Số Vui Nhộn</div>
-        <div class="headline-pill" id="statusPill">Mỗi 5 giây mở 5 số 🎉</div>
+        <div class="headline-pill" id="statusPill" style="display:none;"></div>
       </div>
 
       <img
@@ -606,7 +606,8 @@
       const count = toInteger(countInput.value) || 20;
       const rangeSize = max >= min ? max - min + 1 : 0;
 
-      statusPill.textContent = `Mỗi ${SPIN_DURATION / 1000} giây mở ${BATCH_SIZE} số 🎉`;
+      statusPill.style.display = 'none';
+      statusPill.textContent = '';
 
       if (rangeSize > 0 && count > rangeSize) {
         noteEl.innerHTML = `<span class="error">Số lượng cần quay đang lớn hơn khoảng số hiện có.</span> Hãy giảm số lượng hoặc tăng khoảng số.`;
@@ -795,6 +796,7 @@
         const batchBoxes = boxes.slice(start, end);
 
         subtitleEl.textContent = `🎡 Đang quay đợt ${batchIndex}/${totalBatches}`;
+        statusPill.style.display = 'inline-flex';
         statusPill.textContent = `Chuẩn bị mở ${batchNumbers.length} số sau ${SPIN_DURATION / 1000} giây...`;
         noteEl.textContent = `Hồi hộp nào! Đợt này sẽ hiện ${batchNumbers.length} số.`;
 
@@ -815,7 +817,7 @@
       }
 
       subtitleEl.textContent = '🎉 Hoàn thành!';
-      statusPill.textContent = `Đã quay đủ ${count} số không trùng`;
+      statusPill.textContent = 'Đã quay xong';
       noteEl.textContent = 'Chúc mừng các số may mắn!';
       victorySound();
       fireConfetti(90);
@@ -835,7 +837,8 @@
       startBtn.textContent = '🎡 QUAY SỐ';
       startBtn.disabled = false;
       subtitleEl.textContent = '🎲 Xổ Số Vui Nhộn';
-      statusPill.textContent = `Mỗi ${SPIN_DURATION / 1000} giây mở ${BATCH_SIZE} số 🎉`;
+      statusPill.style.display = 'none';
+      statusPill.textContent = '';
     }
 
     allInputs.forEach(input => {
