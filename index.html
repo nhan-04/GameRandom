@@ -369,21 +369,21 @@
       return { min, max, count, rangeSize };
     }
 
-    function updateText() {
-      const min = toInteger(minInput.value) || 1;
-      const max = toInteger(maxInput.value) || 500;
-      const count = toInteger(countInput.value) || 20;
+function updateText() {
+  subtitleEl.textContent = `🎲 Random Number`;
 
-      subtitleEl.textContent = `🎲 Random Number ${count} số từ ${min} đến ${max}`;
+  const min = toInteger(minInput.value) || 1;
+  const max = toInteger(maxInput.value) || 500;
+  const count = toInteger(countInput.value) || 20;
 
-      const rangeSize = max >= min ? max - min + 1 : 0;
+  const rangeSize = max >= min ? max - min + 1 : 0;
 
-      if (rangeSize > 0 && count > rangeSize) {
-        noteEl.innerHTML = `<span class="error">Số lượng cần quay đang lớn hơn khoảng số hiện có.</span> Hãy giảm số lượng hoặc tăng khoảng số.`;
-      } else {
-        noteEl.textContent = '';
-      }
-    }
+  if (rangeSize > 0 && count > rangeSize) {
+    noteEl.innerHTML = `<span class="error">Số lượng cần quay đang lớn hơn khoảng số hiện có.</span> Hãy giảm số lượng hoặc tăng khoảng số.`;
+  } else {
+    noteEl.textContent = '';
+  }
+}
 
     function initBoxes(count = null) {
       const settings = getSettings(false);
