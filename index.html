@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WeWIN Lottery Random</title>
+  <title>Random Number</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -12,7 +13,9 @@
       min-height: 100vh;
       font-family: 'Montserrat', Arial, sans-serif;
       color: #fff;
-      background: linear-gradient(rgba(10, 43, 115, 0.3), rgba(4, 22, 56, 0.6)), url('anh1.jpg') center/cover no-repeat fixed;
+      background:
+        linear-gradient(rgba(10, 43, 115, 0.3), rgba(4, 22, 56, 0.6)),
+        url('https://i.ibb.co/xq56rRzp/anh1.jpg') center/cover no-repeat fixed;
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -54,21 +57,9 @@
       margin-bottom: 20px;
     }
 
-    .logoImage {
-      max-width: clamp(200px, 30vw, 350px);
-      height: auto;
-      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)) drop-shadow(0 0 15px rgba(255,215,106,0.4));
-      margin-bottom: 10px;
-      transition: transform 0.3s ease;
-    }
-    
-    .logoImage:hover {
-      transform: scale(1.05) rotate(-2deg);
-    }
-
     .sub {
-      font-size: clamp(16px, 2.2vw, 24px);
-      font-weight: 500;
+      font-size: clamp(22px, 3vw, 38px);
+      font-weight: 900;
       opacity: 0.95;
       margin-top: 10px;
       text-shadow: 0 2px 8px rgba(0,0,0,0.6);
@@ -134,7 +125,6 @@
       transform: translateY(-2px);
     }
 
-
     .controls {
       display: flex;
       justify-content: center;
@@ -163,7 +153,10 @@
     button::after {
       content: '';
       position: absolute;
-      top: 0; left: -100%; width: 50%; height: 100%;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
       background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent);
       transform: skewX(-25deg);
       animation: buttonShine 3s infinite;
@@ -174,7 +167,11 @@
       20%, 100% { left: 200%; }
     }
 
-    button:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 20px 40px rgba(255,193,7,0.5), inset 0 0 15px rgba(255,255,255,0.7); }
+    button:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(255,193,7,0.5), inset 0 0 15px rgba(255,255,255,0.7);
+    }
+
     button:active { transform: translateY(2px) scale(0.98); }
     button:disabled { opacity: .65; cursor: not-allowed; transform: none; box-shadow: none; }
     button:disabled::after { display: none; }
@@ -212,6 +209,7 @@
       overflow: hidden;
       transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
+
     .ball:hover {
       transform: translateY(-5px) scale(1.02);
     }
@@ -284,14 +282,19 @@
     }
   </style>
 </head>
+
 <body>
   <main class="stage">
     <section class="brand">
       <div>
-        <img src="logo.png" alt="WEWIN Logo" class="logoImage" />
-        <div class="sub" id="subtitle">🎲 Lottery Random 20 số từ 1 đến 500</div>
+        <div class="sub" id="subtitle">🎲 Random Number 20 số từ 1 đến 500</div>
       </div>
-      <img src="linhvat.png" alt="Linh vật" class="mascot" />
+
+      <img
+        src="https://i.ibb.co/gZZVKky0/linhvat.png"
+        alt="Linh vật"
+        class="mascot"
+      />
     </section>
 
     <section class="settings" aria-label="Cài đặt quay số">
@@ -299,16 +302,17 @@
         <label for="minNum">Từ số</label>
         <input id="minNum" type="number" min="1" step="1" value="1" />
       </div>
+
       <div class="field">
         <label for="maxNum">Đến số</label>
         <input id="maxNum" type="number" min="1" step="1" value="500" />
       </div>
+
       <div class="field">
         <label for="drawCount">Số lượng cần quay</label>
         <input id="drawCount" type="number" min="1" step="1" value="20" />
       </div>
     </section>
-
 
     <div class="controls">
       <button id="startBtn" onclick="startLottery()">🎡 QUAY SỐ</button>
@@ -328,6 +332,7 @@
     const maxInput = document.getElementById('maxNum');
     const countInput = document.getElementById('drawCount');
     const allInputs = [minInput, maxInput, countInput];
+
     let audioCtx;
 
     function toInteger(value) {
@@ -355,6 +360,7 @@
       }
 
       const rangeSize = max - min + 1;
+
       if (count > rangeSize) {
         if (showAlert) alert(`Không thể quay ${count} số vì khoảng ${min} đến ${max} chỉ có ${rangeSize} số.`);
         return null;
@@ -367,13 +373,15 @@
       const min = toInteger(minInput.value) || 1;
       const max = toInteger(maxInput.value) || 500;
       const count = toInteger(countInput.value) || 20;
-      subtitleEl.textContent = `🎲 Lottery Random ${count} số từ ${min} đến ${max}`;
+
+      subtitleEl.textContent = `🎲 Random Number ${count} số từ ${min} đến ${max}`;
 
       const rangeSize = max >= min ? max - min + 1 : 0;
+
       if (rangeSize > 0 && count > rangeSize) {
         noteEl.innerHTML = `<span class="error">Số lượng cần quay đang lớn hơn khoảng số hiện có.</span> Hãy giảm số lượng hoặc tăng khoảng số.`;
       } else {
-        noteEl.textContent = ``;
+        noteEl.textContent = '';
       }
     }
 
@@ -382,6 +390,7 @@
       const boxCount = count || (settings ? settings.count : 20);
 
       numbersEl.innerHTML = '';
+
       for (let i = 0; i < boxCount; i++) {
         const box = document.createElement('div');
         box.className = 'ball';
@@ -394,21 +403,25 @@
 
     function setControlsDisabled(disabled) {
       startBtn.disabled = disabled;
+
       document.querySelectorAll('button.secondary, input').forEach(el => {
         el.disabled = disabled;
       });
     }
 
-
     function beep(freq = 700, duration = 0.055, type = 'sine', volume = 0.07) {
       audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
+
       osc.type = type;
       osc.frequency.value = freq;
       gain.gain.value = volume;
+
       osc.connect(gain);
       gain.connect(audioCtx.destination);
+
       osc.start();
       gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
       osc.stop(audioCtx.currentTime + duration);
@@ -416,12 +429,18 @@
 
     function victorySound() {
       const notes = [523, 659, 784, 1046];
-      notes.forEach((n, i) => setTimeout(() => beep(n, 0.11, 'triangle', 0.3), i * 120));
+
+      notes.forEach((note, index) => {
+        setTimeout(() => beep(note, 0.11, 'triangle', 0.3), index * 120);
+      });
     }
 
     function uniqueRandomNumbers(count, min, max) {
       const pool = [];
-      for (let n = min; n <= max; n++) pool.push(n);
+
+      for (let number = min; number <= max; number++) {
+        pool.push(number);
+      }
 
       // Fisher-Yates shuffle một phần để chọn số nhanh và không bị trùng.
       for (let i = 0; i < count; i++) {
@@ -437,6 +456,7 @@
       if (!settings) return;
 
       const { min, max, count } = settings;
+
       initBoxes(count);
       setControlsDisabled(true);
       startBtn.textContent = 'ĐANG QUAY...';
@@ -453,6 +473,7 @@
 
       for (let i = 0; i < boxes.length; i++) {
         await new Promise(resolve => setTimeout(resolve, revealDelay));
+
         boxes[i].className = 'ball final';
         boxes[i].textContent = finalNumbers[i];
 
@@ -475,6 +496,7 @@
 
     allInputs.forEach(input => {
       input.addEventListener('input', updateText);
+
       input.addEventListener('change', () => {
         const settings = getSettings(false);
         if (settings) initBoxes(settings.count);
