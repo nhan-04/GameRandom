@@ -4,10 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Random Number - Xổ Số Vui Nhộn</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     :root {
       --blue: #2f7df6;
@@ -25,9 +30,14 @@
       min-height: 100vh;
       font-family: 'Montserrat', Arial, sans-serif;
       color: var(--white);
-      background: #0E4BA9 url('https://i.ibb.co/9H3v5CFf/anhnen.png') center center / cover no-repeat fixed;
+
+      background-image: url("https://i.ibb.co/XxPWCsXj/71955653-b068-44a4-b3ef-fbb62cd6ba52.png");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+
       overflow: hidden;
-      opacity: .95;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -36,41 +46,22 @@
 
     body::before,
     body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
       display: none;
     }
-
-    body::before {
-      display: none;
-    }
-
-    body::after {
-      background:
-        linear-gradient(120deg, rgba(255,255,255,.32), transparent 35%),
-        radial-gradient(circle at 50% 2%, rgba(255,255,255,.35), transparent 28%);
-      mix-blend-mode: soft-light;
-    }
-50% { transform: translate3d(0,-10px,0) scale(1.15) rotate(18deg); opacity: 1; }
-    }
-
 
     .stage {
-      width: min(1180px, 92vw);
+      width: min(1260px, 96vw);
       max-height: 96vh;
       min-height: 690px;
       border-radius: 42px;
       padding: 34px;
-      background: rgba(255, 255, 255, 0.22);
-      border: 2px solid rgba(255,255,255,0.52);
+      background: rgba(255, 255, 255, 0.20);
+      border: 2px solid rgba(255,255,255,0.50);
       box-shadow:
-        0 38px 100px rgba(31, 30, 80, 0.35),
-        inset 0 0 38px rgba(255,255,255,0.18);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
+        0 38px 100px rgba(0, 0, 0, 0.35),
+        inset 0 0 38px rgba(255,255,255,0.16);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       position: relative;
       overflow: auto;
       z-index: 1;
@@ -131,8 +122,13 @@
     }
 
     @keyframes mascotFloat {
-      0%, 100% { transform: translateY(0) rotate(-2deg) scale(1); }
-      50% { transform: translateY(-13px) rotate(2deg) scale(1.03); }
+      0%, 100% {
+        transform: translateY(0) rotate(-2deg) scale(1);
+      }
+
+      50% {
+        transform: translateY(-13px) rotate(2deg) scale(1.03);
+      }
     }
 
     .settings {
@@ -169,7 +165,9 @@
       font-weight: 900;
       color: #17306b;
       background: rgba(255,255,255,0.94);
-      box-shadow: inset 0 5px 12px rgba(31,30,80,0.12), 0 8px 16px rgba(31,30,80,0.10);
+      box-shadow:
+        inset 0 5px 12px rgba(31,30,80,0.12),
+        0 8px 16px rgba(31,30,80,0.10);
       transition: all 0.25s ease;
       font-family: inherit;
     }
@@ -224,8 +222,13 @@
     }
 
     @keyframes buttonShine {
-      0% { left: -120%; }
-      25%, 100% { left: 210%; }
+      0% {
+        left: -120%;
+      }
+
+      25%, 100% {
+        left: 210%;
+      }
     }
 
     button:hover {
@@ -235,9 +238,20 @@
         inset 0 0 18px rgba(255,255,255,0.82);
     }
 
-    button:active { transform: translateY(2px) scale(0.98); }
-    button:disabled { opacity: .65; cursor: not-allowed; transform: none; box-shadow: none; }
-    button:disabled::after { display: none; }
+    button:active {
+      transform: translateY(2px) scale(0.98);
+    }
+
+    button:disabled {
+      opacity: .65;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    button:disabled::after {
+      display: none;
+    }
 
     .secondary {
       background: linear-gradient(135deg, rgba(255,255,255,.65), rgba(255,255,255,.25));
@@ -260,12 +274,11 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 1114px;
       margin-inline: auto;
     }
 
     .ball {
-      flex: 0 0 calc((100% - 64px) / 5);
+      flex: 0 1 calc((100% - 64px) / 5);
       min-width: 150px;
       max-width: 210px;
       min-height: 104px;
@@ -289,11 +302,25 @@
       isolation: isolate;
     }
 
-    .ball:nth-child(5n+1) { background-color: rgba(255, 107, 214, .24); }
-    .ball:nth-child(5n+2) { background-color: rgba(66, 217, 255, .24); }
-    .ball:nth-child(5n+3) { background-color: rgba(255, 230, 109, .30); }
-    .ball:nth-child(5n+4) { background-color: rgba(66, 230, 149, .24); }
-    .ball:nth-child(5n+5) { background-color: rgba(155, 92, 255, .22); }
+    .ball:nth-child(5n+1) {
+      background-color: rgba(255, 107, 214, .24);
+    }
+
+    .ball:nth-child(5n+2) {
+      background-color: rgba(66, 217, 255, .24);
+    }
+
+    .ball:nth-child(5n+3) {
+      background-color: rgba(255, 230, 109, .30);
+    }
+
+    .ball:nth-child(5n+4) {
+      background-color: rgba(66, 230, 149, .24);
+    }
+
+    .ball:nth-child(5n+5) {
+      background-color: rgba(155, 92, 255, .22);
+    }
 
     .ball::before {
       content: "";
@@ -363,13 +390,23 @@
     }
 
     @keyframes suspenseShake {
-      0% { transform: translateX(-1px) rotate(-.5deg); }
-      50% { transform: translateX(1px) rotate(.5deg); }
-      100% { transform: translateX(-1px) rotate(-.5deg); }
+      0% {
+        transform: translateX(-1px) rotate(-.5deg);
+      }
+
+      50% {
+        transform: translateX(1px) rotate(.5deg);
+      }
+
+      100% {
+        transform: translateX(-1px) rotate(-.5deg);
+      }
     }
 
     @keyframes spinGlow {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     .final {
@@ -391,9 +428,19 @@
     }
 
     @keyframes finalPop {
-      0% { transform: scale(.68); opacity: .45; }
-      58% { transform: scale(1.14); }
-      100% { transform: scale(1); opacity: 1; }
+      0% {
+        transform: scale(.68);
+        opacity: .45;
+      }
+
+      58% {
+        transform: scale(1.14);
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
 
     .progress {
@@ -420,17 +467,17 @@
     .note {
       text-align: center;
       margin: 16px 0 14px;
-      color: #17306b;
+      color: #ffffff;
       font-size: 16px;
       font-weight: 800;
       line-height: 1.45;
       position: relative;
       z-index: 1;
-      text-shadow: 0 1px 0 rgba(255,255,255,.48);
+      text-shadow: 0 2px 6px rgba(0,0,0,.45);
     }
 
     .error {
-      color: #d60045;
+      color: #ffec6d;
       font-weight: 900;
     }
 
@@ -447,35 +494,67 @@
     }
 
     @keyframes confettiFall {
-      0% { transform: translate3d(0,0,0) rotate(0deg); opacity: 1; }
-      100% { transform: translate3d(var(--x), 115vh, 0) rotate(720deg); opacity: 0; }
+      0% {
+        transform: translate3d(0,0,0) rotate(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate3d(var(--x), 115vh, 0) rotate(720deg);
+        opacity: 0;
+      }
     }
 
     @media (max-width: 880px) {
-      body { overflow: auto; }
-      .stage { padding: 22px; min-height: auto; max-height: none; }
-      .brand { flex-direction: column; text-align: center; }
-      .mascot { width: 170px; }
-      .settings { grid-template-columns: 1fr; }
+      body {
+        overflow: auto;
+        background-attachment: scroll;
+      }
+
+      .stage {
+        padding: 22px;
+        min-height: auto;
+        max-height: none;
+      }
+
+      .brand {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .mascot {
+        width: 170px;
+      }
+
+      .settings {
+        grid-template-columns: 1fr;
+      }
+
       .numbers {
         gap: 12px;
-        max-width: 520px;
       }
+
       .ball {
-        flex: 0 0 calc((100% - 12px) / 2);
+        flex: 0 1 calc((100% - 12px) / 2);
         min-width: 130px;
         max-width: 220px;
       }
-      .ball, .reelViewport, .reelTrack { min-height: 86px; }
-      button { font-size: 18px; padding: 14px 22px; }
+
+      .ball,
+      .reelViewport,
+      .reelTrack {
+        min-height: 86px;
+      }
+
+      button {
+        font-size: 18px;
+        padding: 14px 22px;
+      }
     }
 
     @media (min-width: 881px) and (max-width: 1080px) {
-      .numbers {
-        max-width: 900px;
-      }
       .ball {
-        flex: 0 0 calc((100% - 48px) / 4);
+        flex: 0 1 calc((100% - 48px) / 4);
         min-width: 140px;
       }
     }
@@ -530,6 +609,7 @@
     </div>
 
     <div class="note" id="note"></div>
+
     <section class="numbers" id="numbers"></section>
   </main>
 
@@ -770,7 +850,6 @@
         pool.push(number);
       }
 
-      // Fisher-Yates shuffle một phần để chọn số nhanh và không bị trùng.
       for (let i = 0; i < count; i++) {
         const randomIndex = i + Math.floor(Math.random() * (pool.length - i));
         [pool[i], pool[randomIndex]] = [pool[randomIndex], pool[i]];
